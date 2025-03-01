@@ -26,16 +26,16 @@ jobs:
       - name: Authenticate with Salesforce
         env:
           SFDX_AUTH_URL: ${{ secrets.SFDX_YOM_BUILDER_URL }}  # Store your Salesforce Auth URL in GitHub Secrets
-        run: sfdx auth:sfdxurl:store -f <(echo $SFDX_YOM_BUILDER_URL) -a YOMBuilder
+        run: sf auth:sfdxurl:store -f <(echo $SFDX_YOM_BUILDER_URL) -a YOMBuilder
 
       - name: Create scratch org
-        run: sfdx force:org:create -f config/project-scratch-def.json -a YOMScratchorg -s -d 30
+        run: sf org create scratch -f config/project-scratch-def.json -a YOMScratchorg -s -d 30
 
       - name: Push source to scratch org
-        run: sfdx force:source:push -u YOMScratchorg
+        run: sf project deploy start -o YOMScratchorg
 
       - name: Run all unit tests
-        run: sfdx force:apex:test:run --resultformat human --wait 10 --codecoverage -u YOMScratchorg
+        run: sf apex run test --result-format human --wait 10 --code-coverage -o YOMScratchorg
 
       - name: Delete scratch org
-        run: sfdx force:org:delete -u YOMScratchorg -p
+        run: sf org delete scratch -o YOMScratchorg -p
