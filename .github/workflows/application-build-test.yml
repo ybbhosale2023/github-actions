@@ -1,4 +1,5 @@
-name: Build and Check the unittests 
+name: Build and Check the Unit Tests
+
 on:
   push:
     branches:
@@ -21,21 +22,21 @@ jobs:
           node-version: '14'  # Specify the Node.js version
 
       - name: Install Salesforce CLI
-        run: npm install -g salesforce-cli
+        run: npm install -g @salesforce/cli
 
       - name: Authenticate with Salesforce
         env:
-          SFDX_AUTH_URL: ${{ secrets.SFDX_YOM_BUILDER_URL }}  # Store your Salesforce Auth URL in GitHub Secrets
-        run: sf auth:sfdxurl:store -f <(echo $SFDX_YOM_BUILDER_URL) -a YOMBuilder
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}  # Store your Salesforce Auth URL in GitHub Secrets
+        run: sf auth sfdxurl store -f <(echo $SFDX_AUTH_URL) -a MyOrg
 
       - name: Create scratch org
-        run: sf org create scratch -f config/project-scratch-def.json -a YOMScratchorg -s -d 30
+        run: sf org create scratch -f config/project-scratch-def.json -a MyScratchOrg -s -d 30
 
       - name: Push source to scratch org
-        run: sf project deploy start -o YOMScratchorg
+        run: sf project deploy start -o MyScratchOrg
 
       - name: Run all unit tests
-        run: sf apex run test --result-format human --wait 10 --code-coverage -o YOMScratchorg
+        run: sf apex run test --result-format human --wait 10 --code-coverage -o MyScratchOrg
 
       - name: Delete scratch org
-        run: sf org delete scratch -o YOMScratchorg -p
+        run: sf org delete scratch -o MyScratchOrg -p
