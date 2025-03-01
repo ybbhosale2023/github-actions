@@ -39,7 +39,7 @@ jobs:
         run: sf org create scratch -f "Salesforce Project/config/project-scratch-def.json" -a MyScratchOrg -v MyDevHub
 
       - name: Push source to scratch org
-        run: sf project deploy start -o MyScratchOrg --source-dir "Salesforce Project/force-app"
+        run: sf project deploy start -o MyScratchOrg --source-dir "Salesforce Project"
 
       - name: Run all unit tests
         run: sf apex run test --result-format human --wait 10 --code-coverage -o MyScratchOrg
