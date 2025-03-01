@@ -1,13 +1,15 @@
 {
-  "orgName": "Demo company",
+  "orgName": "YOM Associates",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "country": "US",
+  "language": "en_US",
+  "hasSampleData": true,
   "settings": {
-    "lightningExperienceSettings": {
-      "enableS1DesktopEnabled": true
+    "currencySettings": {
+      "enableMultiCurrency": true
     },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
+    "deploymentSettings": {
+      "doesSkipAsyncApexValidation": true
     }
   }
 }
