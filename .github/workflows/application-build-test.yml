@@ -21,7 +21,7 @@ jobs:
           node-version: '14'  # Specify the Node.js version
 
       - name: Install Salesforce CLI
-        run: npm install -g sfdx-cli
+        run: npm install -g salesforce-cli
 
       - name: Authenticate with Salesforce
         env:
