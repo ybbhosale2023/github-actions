@@ -30,7 +30,8 @@ jobs:
         run: sf auth sfdxurl store -f <(echo $SFDX_AUTH_URL_YOM) -a MyOrg
         
       - name: Navigate to Salesforce Project directory
-        run: cd "Salesforce Project"
+        run: cd "Salesforce Project/Salesforce Project"
+        
       - name: Inspect Content
         run: ls -l
         
