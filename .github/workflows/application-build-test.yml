@@ -28,7 +28,10 @@ jobs:
         env:
           SFDX_AUTH_URL_YOM: ${{ secrets.SFDX_AUTH_URL_YOM }}  
         run: sf auth sfdxurl store -f <(echo $SFDX_AUTH_URL_YOM) -a MyOrg
-
+        
+      - name: Navigate to Salesforce Project directory
+        run: cd "Salesforce Project"
+        
       - name: Create scratch org
         run: sf org create scratch -f config/project-scratch-def.json -a MyScratchOrg -s -d 30
 
