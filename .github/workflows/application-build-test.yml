@@ -26,7 +26,7 @@ jobs:
 
       - name: Authenticate with Salesforce
         env:
-          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL_YOM }}  # Store your Salesforce Auth URL in GitHub Secrets
+          SFDX_AUTH_URL_YOM: ${{ secrets.SFDX_AUTH_URL_YOM }}  
         run: sf auth sfdxurl store -f <(echo $SFDX_AUTH_URL_YOM) -a MyOrg
 
       - name: Create scratch org
