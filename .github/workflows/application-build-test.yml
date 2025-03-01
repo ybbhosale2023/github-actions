@@ -36,7 +36,7 @@ jobs:
         run: ls -l
         
       - name: Create scratch org
-        run: sf org create scratch -f "Salesforce Project/config/project-scratch-def.json" -a MyScratchOrg -s -d 30  -v MyDevHub
+        run: sf org create scratch -f "Salesforce Project/config/project-scratch-def.json" -a MyScratchOrg -d 30  -v MyDevHub
 
       - name: Push source to scratch org
         run: sf project deploy start -o MyScratchOrg
