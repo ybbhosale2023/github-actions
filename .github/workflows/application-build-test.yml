@@ -1,0 +1,41 @@
+name: Build and Check the unittests 
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Specify the Node.js version
+
+      - name: Install Salesforce CLI
+        run: npm install -g sfdx-cli
+
+      - name: Authenticate with Salesforce
+        env:
+          SFDX_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}  # Store your Salesforce Auth URL in GitHub Secrets
+        run: sfdx auth:sfdxurl:store -f <(echo $SFDX_AUTH_URL) -a MyOrg
+
+      - name: Create scratch org
+        run: sfdx force:org:create -f config/project-scratch-def.json -a MyScratchOrg -s -d 30
+
+      - name: Push source to scratch org
+        run: sfdx force:source:push -u MyScratchOrg
+
+      - name: Run all unit tests
+        run: sfdx force:apex:test:run --resultformat human --wait 10 --codecoverage -u MyScratchOrg
+
+      - name: Delete scratch org
+        run: sfdx force:org:delete -u MyScratchOrg -p
